@@ -31,3 +31,7 @@ h2 {
 .search-history {
     padding-left: 50px;
 }
+
+.current {
+    font-size: 30px;
+}

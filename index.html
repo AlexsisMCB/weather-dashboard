@@ -28,18 +28,24 @@
             </form>
         </div>
 
-        <div id="current" class="current card border-0 col-md-9 align-self-end">
+        <div id="" class="card border-0 col-md-9 align-self-end">
             <div class="bg-transparent text-center">
-                <h2>Current Forecast</h2>
+                <h2 id="displayCityName" class="text-center"</h2>
             </div>
             <div class="card-body">
-                <p>example</p>
+                <ul>
+                    <li class="current">Temperature: <span id="temp" class="font-weight-light"></span></li>
+                    <li class="current">Humidity: <span id="humidity" class="font-weight-light"></span></li>
+                    <li class="current">Wind Speed: <span id="wind-speed" class="font-weight-light"></span></li>
+                    <li class="current"></li>
+
+                </ul>
             </div>
         </div>
     </div>
     <div class="row">
-        <div id="search-history" class="search-history col-md-3">
-            <ul>
+        <div class="search-history col-md-3">
+            <ul id="search-history">
                 <li>Example One</li>
                 <li>Example Two</li>
                 <li>Example Three</li>
