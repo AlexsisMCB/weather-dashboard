@@ -13,8 +13,8 @@
     <header class="">
         <h1>WEATHER DASHBOARD</h1>
     </header>
-    <main class="">
-        <div id="" class="col-md-3">
+    <div class="row">
+        <div class="col-md-3">
             <form id="search" class="form-group">
                 <label class="" for="city-search">
                     <h3>Search for a City</h3>
@@ -26,40 +26,44 @@
                     </button>
                 </div>
             </form>
-
-            <div id="search-history">
-                <ul>
-                    <li>Example One</li>
-                    <li>Example Two</li>
-                    <li>Example Three</li>
-                    <li>Example Four</li>
-                </ul>
-            </div>
         </div>
-        
-        <div id="current" class="card col-md-8 align-self-end">
-            <div class="card-header">
+
+        <div id="current" class="current card border-0 col-md-9 align-self-end">
+            <div class="bg-transparent text-center">
                 <h2>Current Forecast</h2>
             </div>
             <div class="card-body">
                 <p>example</p>
             </div>
-
+        </div>
+    </div>
+    <div class="row">
+        <div id="search-history" class="search-history col-md-3">
+            <ul>
+                <li>Example One</li>
+                <li>Example Two</li>
+                <li>Example Three</li>
+                <li>Example Four</li>
+            </ul>
         </div>
     
-        <div id="five-day" class="card col-md-8 align-self-end">
-            <div class="card-header">
-                <h2>5-Day Forecast (after today)</h2>
+        <div id="five-day" class="five-day col-md-9 align-self-end">
+            <div class="bg-transparent text-center">
+                <h2>Future 5-Day Forecast</h2>
             </div>
-            <div class="card-body">
-                <p>example</p>
+            <div class="row">
+                <div class="card text-white bg-primary col m-1"></div>
+                <div class="card text-white bg-primary col m-1"></div>
+                <div class="card text-white bg-primary col m-1"></div>
+                <div class="card text-white bg-primary col m-1"></div>
+                <div class="card text-white bg-primary col m-1"></div>
             </div>
         </div>
-    </main>
+    </div>
 
-    <footer>
+    <!--<footer>
         <h4>AMCB © 2020</h4>
-    </footer>
+    </footer> -->
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="assets/js/script.js"></script>

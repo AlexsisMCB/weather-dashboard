@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -8,8 +10,9 @@ body {
 
 header , footer {
     text-align: center;
-    background-color: lightblue;
-    padding: 10px;
+    background-color: slategray;
+    padding: 5px 10px;
+    color: white;
 }
 
 header h1 {
@@ -18,5 +21,13 @@ header h1 {
 
 div {
     background-color: white;
-    padding:15px;
+    padding: 15px;
+}
+
+h2 {
+    padding: 5px 0;
+}
+
+.search-history {
+    padding-left: 50px;
 }
