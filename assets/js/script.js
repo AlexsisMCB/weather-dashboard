@@ -5,9 +5,11 @@ var searchHistoryEl = document.querySelector("#search-history");
 var displayCityNameEl = document.querySelector("#displayCityName");
 var displayDateEl = document.querySelector("#displayDate");
 var listEl = document.querySelector("#list");
+var futureEl = document.querySelector("#five-day");
+
+var dailyArray = {};
 
 var date = new Date();
-
 
 var getCities = function(city) {
 
@@ -52,17 +54,45 @@ var getCities = function(city) {
                 uvIndex + 
                 "</span></li>";
             
+            if (uvIndex.value > 8) {
+                uvIndex.classList = "bg-danger";
+            }
 
+            dailyArray = data.daily;
 
-            console.log(data.current.dt);
             var timeStamp = data.daily.dt;
             var futureDate = new Date(timeStamp * 1000);
-            console.log(date);
-            console.log(futureDate);
-            console.log(data);
-            console.log(data.current.uvi);
+            console.log(dailyArray);
 
-            //if(!date === data.daily[i]dt) {
+            //console.log(dailyArray.humidity);
+            //console.log(dailyArray.dt);
+            for (var i = 0; i < dailyArray.length - 3; i++) {
+                //console.log(dailyArray[i].dt);
+                //console.log(date);
+                if (date !== dailyArray[i].dt) {
+                    futureEl.classList = "card text-white bg-primary col m-1";
+                    futureEl.innerHTML = "<ol>" + dailyArray.dt + 
+                    "</ol><ol>" + 
+                    dailyArray.temp_day +
+                    "</ol><ol>" + 
+                    dailyArray.humidity +
+                    "</ol>";
+                };
+
+                /*if (date === dailyArray[i].dt) {
+                    console.log("today's date")
+                } else {
+                    futureEl.classList = "card text-white bg-primary col m-1";
+                    futureEl.innerHTML = "<ol>" + futureDate + 
+                    "</ol><ol>" + 
+                    dailyArray.temp_day +
+                    "</ol><ol>" + 
+                    dailyArray.humidity +
+                    "</ol>";
+
+                }*/
+            }
+            
         });
 }
      
@@ -78,39 +108,19 @@ var formSubmitHandler = function(event) {
         getCities(cityName);
         cityInputEl.value = "";
     } else {
+        //var modalEl = document.createElement("div");
+        //modalEl.classList = "modal";
+        //modalEl.innerHTML = "Please enter a city name!";
         alert("Please enter a city name!");
     }
     localStorage.setItem("search", cityName);
-    searchHistoryEl.getItem("search");
+    
 };
 
-var clearEntries = function() {
-    tempLi.textContent= "";
-    humidityLi.textContent="";
-    windSpeedLi.textContent="";
-};
-
-/* var displayCurrentForecast = function(getCities) {
-    // format api url
-    var apiUrlTwo = "https://api.openweathermap.org/data/2.5/weather?q=" + 
-    getCities + 
-    "&units=imperial&appid=e7f07e75bc7f6dd6457bd758e76aaac8";
-
-    fetch(apiUrlTwo)
-        .then(function(response) {
-            response.json().then(function(data) {
-                //console.log(data);
-                displayCurrentForecast(data.name, city);
-                var currentTemp = data.main.temp;
-                var currentHumidity = data.main.humidity;
-                var windSpeed = data.wind.speed;
-
-                tempLi.textContent = currentTemp;
-                humidityLi.textContent = currentHumidity;
-                windSpeedLi.textContent = windSpeed;
-            });
-        });
-} */
+var loadSearches = function() {
+    searches = localStorage.getItem("search");
+    searchHistoryEl.innerHTML = "<li>" + searches + "</li>";
+}
 
 //getCities();
 searchFormEl.addEventListener("submit", formSubmitHandler);
