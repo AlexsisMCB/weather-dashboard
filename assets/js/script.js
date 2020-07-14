@@ -5,15 +5,14 @@ var searchHistoryEl = document.querySelector("#search-history");
 var displayCityNameEl = document.querySelector("#displayCityName");
 var displayDateEl = document.querySelector("#displayDate");
 var listEl = document.querySelector("#list");
-var oneEl = document.querySelector("#day-one");
-var twoEl = document.querySelector("#day-two");
-var threeEl = document.querySelector("#day-three");
-var fourEl = document.querySelector("#day-four");
-var fiveEl = document.querySelector("#day-five");
+var listTwoEl = document.querySelector("#list-2");
+var uvIndexNumEl = document.querySelector("#uv-index-num");
 
-var dailyArray = {};
 
+var searchList = [];
+var searchListTally = 0;
 var date = new Date();
+
 
 var getCities = function(city) {
 
@@ -46,113 +45,90 @@ var getCities = function(city) {
             var currentHumidity = data.current.humidity;
             var windSpeed = data.current.wind_speed;
             var uvIndex = data.current.uvi;
-            
-            listEl.innerHTML =  "<li> Temperature: <span class='font-weight-light'>" + 
-                currentTemp + 
-                "</span></li><li> Humidity: <span class='font-weight-light'>" + 
-                currentHumidity + 
-                "</span></li><li> Wind Speed: <span class='font-weight-light'>" + 
-                windSpeed + "</span></li>" +
-                "</span></li><li> UV Index: <span class='font-weight-light'>" + 
-                uvIndex + 
-                "</span></li>";
-            
-            if (uvIndex.value > 8) {
-                uvIndex.classList = "bg-danger";
-            };
 
             dailyArray = data.daily;
-
-            console.log(dailyArray);
-
-            for (var i = 0; i < dailyArray.length - 3; i++) {
+            currentArray = data.current;
             
+            var currentIcon = currentArray.weather[0].icon;
+            
+            listEl.innerHTML = "<ol><img src='http://openweathermap.org/img/wn/" + 
+                currentIcon + 
+                "@2x.png'></ol><ol> Temp: <span class='font-weight-light'>" + 
+                currentTemp + 
+                "</span></ol><ol> Humidity: <span class='font-weight-light'>" + 
+                currentHumidity + 
+                "</span></ol><ol> Wind Speed: <span class='font-weight-light'>" + 
+                windSpeed + "</span></ol>" +
+                "</span></ol><ol> UV Index: ";
+
+                uvIndexNumEl.innerHTML = uvIndex;
+
+            if (uvIndex >= 8) {
+                uvIndexNumEl.classList = "p-2 rounded bg-danger text-white";
+                ////////////// 
+            } else if (uvIndex >= 5) {
+                uvIndexNumEl.classList = "p-2 rounded bg-warning text-white";
+            } else {
+                uvIndexNumEl.classList = "p-2 rounded bg-info text-white";
+            };
+
+
+            for (var i = 1; i < dailyArray.length - 2; i++) {
+
+                var otherDates = new Date(dailyArray[i].dt * 1000);
+                var otherTemp = dailyArray[i].temp.day;
+                var otherHumidity = dailyArray[i].humidity;
+
+                var dailyIcon = dailyArray[i].weather[0].icon;
+                
                 if (date !== dailyArray[i].dt) {
-                    oneEl.classList = "card text-white bg-primary col m-1";
-                    oneEl.innerHTML = "<ol> Date: " + dailyArray[1].dt + 
-                    "</ol><ol> Temp: " + 
-                    dailyArray[1].day +
-                    "</ol><ol> Humidity: " + 
-                    dailyArray[1].humidity +
-                    "</ol>";
 
-                    twoEl.classList = "card text-white bg-primary col m-1";
-                    twoEl.innerHTML = "<ol> Date: " + dailyArray[2].dt + 
-                    "</ol><ol> Temp: " + 
-                    dailyArray[2].day +
-                    "</ol><ol> Humidity: " + 
-                    dailyArray[2].humidity +
-                    "</ol>";
-
-                    threeEl.classList = "card text-white bg-primary col m-1";
-                    threeEl.innerHTML = "<ol> Date: " + dailyArray[3].dt + 
-                    "</ol><ol> Temp: " + 
-                    dailyArray[3].day +
-                    "</ol><ol> Humidity: " + 
-                    dailyArray[3].humidity +
-                    "</ol>";
-
-                    fourEl.classList = "card text-white bg-primary col m-1";
-                    fourEl.innerHTML = "<ol> Date: " + dailyArray[4].dt + 
-                    "</ol><ol> Temp: " + 
-                    dailyArray[4].day +
-                    "</ol><ol> Humidity: " + 
-                    dailyArray[4].humidity +
-                    "</ol>";
-
-                    fiveEl.classList = "card text-white bg-primary col m-1";
-                    fiveEl.innerHTML = "<ol> Date: " + dailyArray[5].dt + 
-                    "</ol><ol> Temp: " + 
-                    dailyArray[5].day +
-                    "</ol><ol> Humidity: " + 
-                    dailyArray[5].humidity +
+                    var fiveForecastEl = document.createElement("div");
+                    fiveForecastEl.classList = "card text-white bg-primary col m-1";
+                    fiveForecastEl.innerHTML = "<ol> Date: " + 
+                    otherDates + 
+                    "<ol class='text-center'><img src='http://openweathermap.org/img/wn/" + 
+                    dailyIcon + "@2x.png'></ol><ol class='text-center card-text'> Temp: " + 
+                    otherTemp +
+                    "</ol><ol class='text-center card-text'> Humidity: " + 
+                    otherHumidity +
                     "</ol>";
                 };
-
-                /*if (date === dailyArray[i].dt) {
-                    console.log("today's date")
-                } else {
-                    futureEl.classList = "card text-white bg-primary col m-1";
-                    futureEl.innerHTML = "<ol>" + futureDate + 
-                    "</ol><ol>" + 
-                    dailyArray.temp_day +
-                    "</ol><ol>" + 
-                    dailyArray.humidity +
-                    "</ol>";
-
-                }*/
+                listTwoEl.appendChild(fiveForecastEl);
             }
-            
         });
-}
-     
-var loadArray = function() {
+    listTwoEl.innerHTML = "";
+    loadSearches();
+};
+    
 
-}
 var formSubmitHandler = function(event) {
     event.preventDefault();
-    // get value from input element
+    
     var cityName = cityInputEl
         .value
         .trim();
 
     if (cityName) {
         getCities(cityName);
-        cityInputEl.value = "";
+        searchFormEl.reset();
     } else {
-        //var modalEl = document.createElement("div");
-        //modalEl.classList = "modal";
-        //modalEl.innerHTML = "Please enter a city name!";
         alert("Please enter a city name!");
     }
-    localStorage.setItem("search", cityName);
-    
+    searchList = cityName;
+    saveSearches();
+};
+
+var saveSearches = function() {
+    localStorage.setItem("search", searchList);
 };
 
 var loadSearches = function() {
-    searches = localStorage.getItem("search");
-    searchHistoryEl.innerHTML = "<li>" + searches + "</li>";
-}
+    for (var i=0; i < searchList.length; i++) {
+        var searches = localStorage.getItem("search");
+        searchHistoryEl.innerHTML = "<ol>" + searches + "<ol>";
+    }
+};
 
-//getCities();
+
 searchFormEl.addEventListener("submit", formSubmitHandler);
